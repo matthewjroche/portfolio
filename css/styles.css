@@ -78,13 +78,38 @@ body {
 /* Collapsed state */
 .sidebar.collapsed {
     width: var(--sidebar-collapsed-width);
+    padding: var(--spacing-small);
+}
+
+.sidebar.collapsed .sidebar-header {
+    text-align: center;
+}
+
+.sidebar.collapsed .profile-photo-container {
+    margin: 0 auto var(--spacing-small) auto;
+}
+
+.sidebar.collapsed .profile-photo {
+    width: 40px;
+    height: 40px;
 }
 
 .sidebar.collapsed .sidebar-header h1,
-.sidebar.collapsed .sidebar-header p,
-.sidebar.collapsed .nav-link span {
-    opacity: 0;
-    visibility: hidden;
+.sidebar.collapsed .sidebar-header p {
+    display: none;
+}
+
+.sidebar.collapsed .nav-link {
+    padding: 12px;
+    text-align: center;
+    font-size: 0;
+    position: relative;
+}
+
+.sidebar.collapsed .nav-link::before {
+    content: "•";
+    font-size: 1.5rem;
+    position: static;
 }
 
 /* Sidebar header */
@@ -92,25 +117,44 @@ body {
     margin-bottom: var(--spacing-large);
     padding-bottom: var(--spacing-large);
     border-bottom: 1px solid var(--border-color);
+    text-align: center;
+}
+
+/* Profile Photo Styles */
+.profile-photo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-medium);
+    transition: margin var(--transition-speed);
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--accent-color);
+    box-shadow: 0 4px 8px var(--shadow);
+    transition: width var(--transition-speed), height var(--transition-speed), border-width var(--transition-speed);
 }
 
 .sidebar-header h1 {
     font-size: 1.5rem;
     margin-bottom: var(--spacing-small);
-    transition: opacity var(--transition-speed);
+    transition: all var(--transition-speed);
 }
 
 .subtitle {
     font-size: 0.9rem;
     color: var(--text-secondary);
     margin-bottom: 4px;
-    transition: opacity var(--transition-speed);
+    transition: all var(--transition-speed);
 }
 
 .location {
     font-size: 0.85rem;
     color: var(--text-secondary);
-    transition: opacity var(--transition-speed);
+    transition: all var(--transition-speed);
 }
 
 /* Navigation */
