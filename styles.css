@@ -1,0 +1,688 @@
+/* ===================================
+   CSS Variables for Easy Theme Management
+   =================================== */
+
+:root {
+    /* Light mode colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #dddddd;
+    --sidebar-bg: #f8f9fa;
+    --accent-color: #0066cc;
+    --accent-hover: #0052a3;
+    --shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Spacing */
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 60px;
+    --header-height: 60px;
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 24px;
+    
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+/* Dark mode colors */
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --border-color: #404040;
+    --sidebar-bg: #242424;
+    --accent-color: #4a9eff;
+    --accent-hover: #6eb3ff;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* ===================================
+   Base Styles
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* ===================================
+   Sidebar Styles
+   =================================== */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: var(--spacing-large);
+    transition: transform var(--transition-speed), width var(--transition-speed);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+/* Collapsed state */
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .sidebar-header h1,
+.sidebar.collapsed .sidebar-header p,
+.sidebar.collapsed .nav-link span {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Sidebar header */
+.sidebar-header {
+    margin-bottom: var(--spacing-large);
+    padding-bottom: var(--spacing-large);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-small);
+    transition: opacity var(--transition-speed);
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    transition: opacity var(--transition-speed);
+}
+
+.location {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: opacity var(--transition-speed);
+}
+
+/* Navigation */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-small);
+}
+
+.nav-link {
+    display: block;
+    padding: 12px 16px;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+    position: relative;
+}
+
+.nav-link:hover {
+    background-color: var(--bg-secondary);
+    color: var(--accent-color);
+}
+
+.nav-link.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+    position: absolute;
+    bottom: var(--spacing-large);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.sidebar-toggle:hover {
+    background-color: var(--bg-secondary);
+    transform: translateX(-50%) scale(1.1);
+}
+
+.sidebar.collapsed .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.toggle-icon {
+    transition: transform var(--transition-speed);
+    display: inline-block;
+}
+
+/* ===================================
+   Main Content Area
+   =================================== */
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    transition: margin-left var(--transition-speed);
+}
+
+/* When sidebar is collapsed */
+.sidebar.collapsed ~ .main-content {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+/* Top bar with theme toggle */
+.top-bar {
+    height: var(--header-height);
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 var(--spacing-large);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.theme-toggle:hover {
+    background-color: var(--border-color);
+    transform: scale(1.1);
+}
+
+/* ===================================
+   Content Area
+   =================================== */
+
+.content {
+    padding: var(--spacing-large);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.intro-section {
+    margin-bottom: var(--spacing-large);
+}
+
+.intro-section h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-medium);
+    color: var(--text-primary);
+}
+
+.intro-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+/* ===================================
+   Dashboard Cards
+   =================================== */
+
+.dashboard-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-large);
+}
+
+.dashboard-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-large);
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow);
+}
+
+.dashboard-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-medium);
+    color: var(--text-primary);
+}
+
+.dashboard-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-medium);
+    line-height: 1.8;
+}
+
+/* Power BI Container */
+.powerbi-container {
+    margin: var(--spacing-medium) 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.powerbi-container iframe {
+    display: block;
+    width: 100%;
+    min-height: 600px;
+    border: none;
+}
+
+/* Placeholder for Power BI */
+.powerbi-placeholder {
+    background-color: var(--bg-primary);
+    padding: 60px var(--spacing-large);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.powerbi-placeholder p {
+    margin-bottom: var(--spacing-small);
+}
+
+.placeholder-note {
+    font-size: 0.85rem;
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Dashboard metadata */
+.dashboard-meta {
+    margin-top: var(--spacing-medium);
+    padding-top: var(--spacing-medium);
+    border-top: 1px solid var(--border-color);
+}
+
+.dashboard-meta p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-small);
+}
+
+.dashboard-meta strong {
+    color: var(--text-primary);
+}
+
+/* ===================================
+   Responsive Design
+   =================================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .sidebar.collapsed ~ .main-content {
+        margin-left: 0;
+    }
+    
+    /* Mobile menu button */
+    .sidebar-toggle {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1001;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .content {
+        padding: var(--spacing-medium);
+    }
+    
+    .intro-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .dashboard-card {
+        padding: var(--spacing-medium);
+    }
+    
+    .powerbi-container iframe {
+        min-height: 400px;
+    }
+}
+
+/* ===================================
+   About Page Styles
+   =================================== */
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-large);
+}
+
+.about-section {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-large);
+}
+
+.about-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-medium);
+    color: var(--text-primary);
+}
+
+.about-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-small);
+    color: var(--accent-color);
+}
+
+.about-section p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-medium);
+}
+
+.about-section ul {
+    list-style-position: inside;
+    color: var(--text-secondary);
+}
+
+.skills-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.skills-list li {
+    padding: var(--spacing-small) 0;
+    padding-left: 24px;
+    position: relative;
+}
+
+.skills-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Skills Grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-large);
+    margin-top: var(--spacing-medium);
+}
+
+.skill-category {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-medium);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.skill-category ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.skill-category li {
+    padding: 6px 0;
+    color: var(--text-secondary);
+}
+
+/* Contact Links */
+.contact-links {
+    display: flex;
+    gap: var(--spacing-medium);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-medium);
+}
+
+.contact-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s, transform 0.2s;
+    font-weight: 500;
+}
+
+.contact-button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   Career Page Styles - Timeline
+   =================================== */
+
+.timeline {
+    position: relative;
+    padding-left: 40px;
+    margin: var(--spacing-large) 0;
+}
+
+/* Vertical line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--border-color);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: var(--spacing-large);
+    padding-bottom: var(--spacing-large);
+}
+
+/* Timeline marker (dot) */
+.timeline-marker {
+    position: absolute;
+    left: -32px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    border: 3px solid var(--bg-primary);
+    z-index: 1;
+}
+
+.timeline-content {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-large);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--spacing-small);
+    margin-bottom: var(--spacing-small);
+}
+
+.timeline-header h3 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.timeline-period {
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.timeline-company {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: var(--spacing-medium);
+}
+
+.timeline-responsibilities {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.timeline-responsibilities li {
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.timeline-responsibilities li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Certifications Section */
+.certifications-section {
+    margin-top: calc(var(--spacing-large) * 2);
+}
+
+.certifications-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-large);
+    color: var(--text-primary);
+}
+
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-medium);
+}
+
+.certification-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-large);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.certification-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow);
+}
+
+.certification-card h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-small);
+}
+
+.cert-issuer {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.cert-date {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* ===================================
+   Responsive Adjustments for New Pages
+   =================================== */
+
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-links {
+        flex-direction: column;
+    }
+    
+    .contact-button {
+        text-align: center;
+    }
+    
+    .timeline-header {
+        flex-direction: column;
+    }
+    
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===================================
+   Print Styles
+   =================================== */
+
+@media print {
+    .sidebar,
+    .theme-toggle,
+    .sidebar-toggle {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .dashboard-card,
+    .timeline-item,
+    .certification-card {
+        page-break-inside: avoid;
+    }
+}
