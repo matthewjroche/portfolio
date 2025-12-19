@@ -3,6 +3,20 @@
 // Handles sidebar collapse and dark mode toggle
 // ===================================
 
+// Apply theme immediately to prevent flash
+(function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+        // Check if user's system prefers dark mode
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    }
+})();
+
 // Wait for DOM to be fully loaded before running scripts
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -26,17 +40,14 @@ function initializeDarkMode() {
     // Check if user has a saved theme preference
     const savedTheme = localStorage.getItem('theme');
     
-    // If there's a saved theme, apply it
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme, themeIcon);
+    // Get current theme (already applied above)
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    
+    // Update icon to match current theme
+    if (currentTheme === 'dark') {
+        updateThemeIcon('dark', themeIcon);
     } else {
-        // Check if user's system prefers dark mode
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            updateThemeIcon('dark', themeIcon);
-        }
+        updateThemeIcon('light', themeIcon);
     }
     
     // Add click event listener to theme toggle button
